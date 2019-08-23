@@ -22,6 +22,23 @@ bool BinaryTreeProjectApp::startup() {
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 	g_systemFont = new aie::Font("../bin/font/consolas.ttf", 32);
 
+	/*m_binaryTree.insert(100);
+	m_binaryTree.insert(150);
+	m_binaryTree.insert(125);
+	m_binaryTree.insert(110);
+	m_binaryTree.insert(140);
+	m_binaryTree.insert(175);
+	m_binaryTree.insert(160);
+	m_binaryTree.insert(200);
+	m_binaryTree.insert(50);
+	m_binaryTree.insert(75);
+	m_binaryTree.insert(25);
+	m_binaryTree.insert(10);
+	m_binaryTree.insert(40);
+	m_binaryTree.insert(60);
+	m_binaryTree.insert(90);
+	m_binaryTree.insert(125);
+	m_binaryTree.insert(15);*/
 	return true;
 }
 

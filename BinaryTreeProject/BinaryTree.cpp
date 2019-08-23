@@ -1,5 +1,6 @@
 #include "BinaryTree.h"
-
+#include <iostream>
+using namespace std;
 
 
 BinaryTree::BinaryTree()
@@ -102,10 +103,11 @@ bool BinaryTree::findNode(int a_nSearchValue, TreeNode** ppOutNode, TreeNode** p
 	// Set the current node to the root
 	TreeNode * currentNode = m_pRoot;
 	TreeNode * parent;
+	parent = currentNode;
 	// While the current node is not null
 	while (currentNode != nullptr)
 	{
-		parent = currentNode;
+		
 		//if the search value equals the current node value,
 		if (currentNode->getData() == a_nSearchValue)
 		{
@@ -119,12 +121,14 @@ bool BinaryTree::findNode(int a_nSearchValue, TreeNode** ppOutNode, TreeNode** p
 			// If the search value is less than the current node
 			if (a_nSearchValue < currentNode->getData())
 			{
+				parent = currentNode;
 				// set the current node to the left child
 				currentNode = currentNode->getLeft();
 			}
 			//otherwise set the current node to the right child
 			else if (a_nSearchValue > currentNode->getData())
 			{
+				parent = currentNode;
 				currentNode = currentNode->getRight();
 			}
 				
@@ -141,41 +145,63 @@ void BinaryTree::remove(int value)
 	// find the value in the tree, obtaining a pointer to the node and its parent
 	TreeNode * currentNode = m_pRoot;
 	TreeNode * parent;
-	TreeNode * minimumParent;
-	findNode(value, &currentNode, &parent);
-	// If the current node has a right branch, then
-	if (currentNode->getRight() != nullptr) {
-		currentNode = currentNode->getRight();
-		// find the minimum value in the right branch by iterating down the left branch of the
-		// current node’s right child until there are no more left branch nodes
-		while (currentNode->getLeft() != nullptr)
-		{
-			minimumParent = currentNode;
-			currentNode = currentNode->getLeft();
-		}
-		// copy the value from this minimum node to the current node
-		parent->getRight()->setData(currentNode->getData());
-		// find the minimum node’s parent node(the parent of the node you are deleting)
-		// if you are deleting the parent’s left node
-		if (value < parent->getData())
-		{
-			// set this left child of the parent to the right child of the minimum node
-			parent->setLeft(currentNode);
-		}
-		// if you are deleting the parent’s right node
-		if(value > parent->getData())
-		{
+	if (findNode(value, &currentNode, &parent)) {
+		TreeNode * minimumParent = currentNode;
+		TreeNode * minimumNode = currentNode;
+		// If the current node has a right branch, then
+		if (currentNode->getRight() != nullptr) {
+			minimumNode = currentNode->getRight();
+			// find the minimum value in the right branch by iterating down the left branch of the
+			// current node’s right child until there are no more left branch nodes
+			while (minimumNode->getLeft() != nullptr)
+			{
+				minimumParent = minimumNode;
+				minimumNode = minimumNode->getLeft();
+			}
+
+			// copy the value from this minimum node to the current node
+			currentNode->setData(minimumNode->getData());
+
+
+			// find the minimum node’s parent node(the parent of the node you are deleting)
+			// if you are deleting the parent’s right node
 			// set the right child of the parent to the minimum node’s right child
-			parent->setRight(currentNode);
+			if (minimumParent->getData() == minimumParent->getRight()->getData() || value > minimumParent->getData())
+			{
+				std::cout << "in get right";
+				minimumParent->setRight(minimumNode->getRight());
+			}
+
+			// if you are deleting the parent’s left node
+			// set this left child of the parent to the right child of the minimum node
+			else if (minimumParent->getData() == minimumParent->getLeft()->getData() || value < minimumParent->getData())
+			{
+				std::cout << "in get left";
+				minimumParent->setLeft(minimumNode->getRight());
+			}
 		}
-	}
-	else if (currentNode->getLeft() != nullptr) {
+
 		// If the current node has no right branch
+		else
+		{
 			// if we are deleting the parent’s left child, set the left child of the parent to the left
+			if (value < parent->getData())
+			{
 				// child of the current node
+				parent->setLeft(currentNode->getLeft());
+			}
 			// If we are deleting the parent’s right child, set the right child of the parent to the left
+			else if (value > parent->getData())
+			{
 				// child of the current node
+				parent->setRight(currentNode->getLeft());
+			}
 			// If we are deleting the root, the root becomes the left child of the current node
+			else if (m_pRoot->getData() == value)
+			{
+				m_pRoot = m_pRoot->getLeft();
+			}
+		}
 	}
 }
 
@@ -190,7 +216,7 @@ TreeNode* BinaryTree::find(int a_nValue)
 		{
 			currentNode = currentNode->getLeft();
 		}
-		else if (a_nValue < currentNode->getData())
+		else if (a_nValue > currentNode->getData())
 		{
 			currentNode = currentNode->getRight();
 		}
