@@ -156,7 +156,7 @@ void BinaryTree::remove(int value)
 			while (minimumNode->getLeft() != nullptr)
 			{
 				minimumParent = minimumNode;
-				minimumNode = minimumNode->getLeft();
+				minimumNode = minimumNode->getLeft(); //
 			}
 
 			// copy the value from this minimum node to the current node
@@ -166,17 +166,22 @@ void BinaryTree::remove(int value)
 			// find the minimum node’s parent node(the parent of the node you are deleting)
 			// if you are deleting the parent’s right node
 			// set the right child of the parent to the minimum node’s right child
-			if (minimumParent->getData() == minimumParent->getRight()->getData() || value > minimumParent->getData())
+			
+			 if (minimumParent->getData() == minimumParent->getRight()->getData()) 
 			{
-				std::cout << "in get right";
 				minimumParent->setRight(minimumNode->getRight());
 			}
-
+			 else if (minimumParent->getData() > value)
+			// (minimumParent->getData() == minimumParent->getRight()->getData() || value > minimumParent->getData()) ///
+			{
+				std::cout << "in get right";
+				minimumParent->setLeft(minimumNode->getRight());
+			}
 			// if you are deleting the parent’s left node
 			// set this left child of the parent to the right child of the minimum node
-			else if (minimumParent->getData() == minimumParent->getLeft()->getData() || value < minimumParent->getData())
+			//else if (minimumParent->getData() == minimumParent->getLeft()->getData() || value < minimumParent->getData())
+			else if (value < minimumParent->getData() || minimumParent->getData() == minimumParent->getLeft()->getData())
 			{
-				std::cout << "in get left";
 				minimumParent->setLeft(minimumNode->getRight());
 			}
 		}
@@ -199,7 +204,15 @@ void BinaryTree::remove(int value)
 			// If we are deleting the root, the root becomes the left child of the current node
 			else if (m_pRoot->getData() == value)
 			{
-				m_pRoot = m_pRoot->getLeft();
+				if (m_pRoot->getLeft() != nullptr)
+				{
+					m_pRoot = m_pRoot->getLeft();
+				}
+				else 
+				{
+					m_pRoot = m_pRoot->getRight();
+				}
+				
 			}
 		}
 	}
