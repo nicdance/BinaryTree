@@ -23,6 +23,6 @@ protected:
 
 
 
-	BinaryTree			m_binaryTree;
+	BinaryTree*			m_binaryTree;
 	TreeNode*			m_selectedNode;
 };

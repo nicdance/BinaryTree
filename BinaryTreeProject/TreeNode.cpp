@@ -1,6 +1,7 @@
 #include "TreeNode.h"
 extern aie::Font* g_systemFont;
 #include <stdio.h>
+#include <iostream>
 
 
 TreeNode::TreeNode()
@@ -18,6 +19,8 @@ TreeNode::TreeNode(int value)
 
 TreeNode::~TreeNode()
 {
+	delete m_left;
+	delete m_right;
 }
 
 void TreeNode::draw(aie::Renderer2D* renderer, int x, int y, bool selected)

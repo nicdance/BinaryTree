@@ -1,5 +1,6 @@
 #pragma once
 #include "TreeNode.h"
+#include "MemoryLeakChecker.h"
 
 class BinaryTree 
 {

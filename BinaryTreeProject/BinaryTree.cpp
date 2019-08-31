@@ -11,6 +11,7 @@ BinaryTree::BinaryTree()
 
 BinaryTree::~BinaryTree()
 {
+	delete m_pRoot;
 }
 
 void BinaryTree::draw(aie::Renderer2D* renderer, TreeNode* selected)
@@ -52,7 +53,8 @@ void BinaryTree::insert(int a_nValue)
 	// If the tree is empty, the value is inserted at the root
 	if (m_pRoot == nullptr) 
 	{
-		m_pRoot = new TreeNode(a_nValue);
+		//m_pRoot = new TreeNode(a_nValue);
+		m_pRoot = DBG_NEW TreeNode(a_nValue);
 	}
 	else 
 	{
@@ -85,12 +87,14 @@ void BinaryTree::insert(int a_nValue)
 		if (a_nValue < parent->getData() ) 
 		{
 			// insert value as left child node
-			parent->setLeft(new TreeNode(a_nValue));
+			//parent->setLeft(new TreeNode(a_nValue));
+			parent->setLeft(DBG_NEW  TreeNode(a_nValue));
 		}
 		// otherwise insert value as right child node
 		else 
 		{
-			parent->setRight(new TreeNode(a_nValue));
+			//parent->setRight(new TreeNode(a_nValue));
+			parent->setRight(DBG_NEW  TreeNode(a_nValue));
 		}
 	}
 }
@@ -215,6 +219,7 @@ void BinaryTree::remove(int value)
 				
 			}
 		}
+		delete(minimumNode);
 	}
 }
 
