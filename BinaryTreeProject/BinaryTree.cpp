@@ -170,26 +170,23 @@ void BinaryTree::remove(int value)
 			// find the minimum node’s parent node(the parent of the node you are deleting)
 			// if you are deleting the parent’s right node
 			// set the right child of the parent to the minimum node’s right child
-			
-			 if (minimumParent->getData() == minimumParent->getRight()->getData()) 
-			{
-				minimumParent->setRight(minimumNode->getRight());
-			}
-			 else if (minimumParent->getData() > value)
-			// (minimumParent->getData() == minimumParent->getRight()->getData() || value > minimumParent->getData()) ///
-			{
-				std::cout << "in get right";
-				minimumParent->setLeft(minimumNode->getRight());
-			}
 			// if you are deleting the parent’s left node
 			// set this left child of the parent to the right child of the minimum node
-			//else if (minimumParent->getData() == minimumParent->getLeft()->getData() || value < minimumParent->getData())
-			else if (value < minimumParent->getData() || minimumParent->getData() == minimumParent->getLeft()->getData())
+			if (currentNode->getRight()->getLeft() == nullptr)
 			{
-				minimumParent->setLeft(minimumNode->getRight());
+				currentNode->setRight(currentNode->getRight()->getRight());	// Causing error
 			}
-		}
+			else if (minimumNode->getRight() !=nullptr)
+			{
+				minimumParent->setLeft(minimumNode->getRight());			// Causing error
+			}
+			else
+			{
+				minimumParent->setLeft(nullptr);
+			}
 
+
+		}
 		// If the current node has no right branch
 		else
 		{
@@ -197,7 +194,7 @@ void BinaryTree::remove(int value)
 			if (value < parent->getData())
 			{
 				// child of the current node
-				parent->setLeft(currentNode->getLeft());
+				parent->setLeft(currentNode->getLeft());	// Causing error
 			}
 			// If we are deleting the parent’s right child, set the right child of the parent to the left
 			else if (value > parent->getData())
@@ -219,6 +216,8 @@ void BinaryTree::remove(int value)
 				
 			}
 		}
+		minimumNode->setLeft(nullptr);
+		minimumNode->setRight(nullptr);
 		delete(minimumNode);
 	}
 }
